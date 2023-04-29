@@ -1,4 +1,4 @@
-const { resp } = require("../../../utility/response");
+const { resp } = require("../utility/response");
 
 module.exports = {
   getHome: (req, res) => {
