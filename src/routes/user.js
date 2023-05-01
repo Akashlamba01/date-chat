@@ -70,12 +70,26 @@ router.post(
   celebrate({
     body: Joi.object().keys({
       password: Joi.string().required(),
-      newPassword: Joi.string().required(),
+      newPassword: Joi.string()
+        .pattern(new RegExp("^[a-zA-Z0-9!@#$%^&*]{6,16}$"))
+        .required()
+        .min(8),
       cPassword: Joi.ref("newPassword"),
     }),
   }),
   auth.verifyToken,
   userContorller.changePassword
+);
+
+router.post(
+  "/upload-img/:id",
+  celebrate({
+    body: Joi.object().keys({
+      avatar: Joi.string(),
+    }),
+  }),
+  auth.verifyToken,
+  userContorller.uploadImg
 );
 
 module.exports = router;

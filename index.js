@@ -1,7 +1,6 @@
 const express = require("express");
 require("dotenv").config;
 const db = require("./src/config/conn");
-const exp = require("constants");
 const { errors } = require("celebrate");
 const bodyParser = require("body-parser");
 

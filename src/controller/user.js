@@ -131,4 +131,39 @@ module.exports = {
       return resp.fail(res, "err from user signin", e);
     }
   },
+
+  uploadImg: async (req, res) => {
+    try {
+      let user = await User.findById(req.params.id);
+      if (!user) {
+        return resp.unauthorized(res);
+      }
+
+      User.uploadAvatar(req, res, async function (err) {
+        if (err) {
+          console.log(err);
+        }
+        // console.log(user.avatar);
+        if (req.file) {
+          // if (user.avatar) {
+          //   let avatarPrePath = path.join(__dirname, "..", user.avatar);
+          //   await fs.unlink(avatarPrePath, (err) => {
+          //     if (err) throw err;
+          //     console.log("filepath: ", avatarPrePath);
+          //   });
+          // }
+
+          user.avatar = User.avatarPath + "/" + req.file.filename;
+          console.log(user.avatar);
+        }
+
+        user.save();
+        // console.log(req.file);
+      });
+
+      return resp.success(res, "fileupload", user);
+    } catch (e) {
+      return resp.fail(res);
+    }
+  },
 };
