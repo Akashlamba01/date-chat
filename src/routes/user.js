@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Joi, celebrate } = require("celebrate");
 const userContorller = require("../controller/user");
+const auth = require("../utility/middleware");
 
 router.get("/", userContorller.getUser);
 
@@ -31,8 +32,9 @@ router.post(
   "/login",
   celebrate({
     body: Joi.object().keys({
-      email: Joi.string().email().lowercase().required(),
-      password: Joi.string().required(),
+      email: Joi.string().email().lowercase().optional(),
+      userName: Joi.string().optional(),
+      password: Joi.string().optional(),
     }),
   }),
   userContorller.login
@@ -42,6 +44,7 @@ router.post(
   "/update/:id",
   celebrate({
     body: Joi.object().keys({
+      _id: Joi.string().optional(),
       firstName: Joi.string().optional(),
       lastName: Joi.string().optional(),
       email: Joi.string().email().lowercase().optional(),
@@ -56,8 +59,11 @@ router.post(
       cityState: Joi.string().lowercase().optional(),
     }),
   }),
+  auth.verifyToken,
   userContorller.update
 );
+
+router.post("/logout", auth.verifyToken, userContorller.logout);
 
 router.post(
   "/change-password/:id",
@@ -68,6 +74,7 @@ router.post(
       cPassword: Joi.ref("newPassword"),
     }),
   }),
+  auth.verifyToken,
   userContorller.changePassword
 );
 

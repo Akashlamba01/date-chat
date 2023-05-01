@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const { resp } = require("../utility/response");
+const jwt = require("jsonwebtoken");
 const md5 = require("md5");
+const auth = require("../utility/middleware");
 
 module.exports = {
   getUser: async (req, res) => {
@@ -12,8 +14,15 @@ module.exports = {
 
   signUp: async (req, res) => {
     try {
+      req.body.accessToken = jwt.sign(
+        { email: req.body.email },
+        "supersecret",
+        {
+          expiresIn: "10m",
+        }
+      );
       if (req.body.password != req.body.c_password) {
-        return resp.unknown(res);
+        return resp.unknown(res, "Passwords are not matched!");
       }
 
       let user = await User.findOne({
@@ -26,7 +35,6 @@ module.exports = {
         // console.log(userData);
         return resp.success(res, "signup successfuly", userData);
       }
-
       return resp.taken(res, "email has already exitst");
     } catch (e) {
       // console.log("err from user signup", e);
@@ -35,32 +43,68 @@ module.exports = {
   },
 
   login: async (req, res) => {
-    // console.log("klljlkjlkjlkjl", req.body.email);
     try {
+      req.body.accessToken = jwt.sign(
+        { email: req.body.email },
+        "supersecret",
+        {
+          expiresIn: "10m",
+        }
+      );
       let user = await User.findOne({ email: req.body.email });
-
-      if (!user) {
-        return resp.notFound(res, "User not found");
+      if (!user || user.password != md5(req.body.password)) {
+        return resp.unknown(res, "Invalid Credentials");
       }
 
-      if (user.password != md5(req.body.password)) {
-        return resp.unknown(res, "Invalid details");
-      }
-
-      return resp.success(res, "login successfully", user);
+      let userData = await User.findOneAndUpdate(
+        { email: user.email },
+        {
+          accessToken: req.body.accessToken,
+        },
+        { new: true }
+      );
+      return resp.success(res, "loged In Successfully", userData);
     } catch (error) {
-      // console.log("err from user signin", error);
       return resp.fail(res, "err from user signin", error);
     }
   },
 
   update: async (req, res) => {
+    // console.log("from token", userId);
     try {
-      let user = User.findByIdAndUpdate(req.params.id, req.body);
-      console.log(user);
+      let user = await User.findById(req.params.id);
+      if (!user) {
+        return resp.unauthorized(res, "Invalid Id");
+      }
+      req.body.accessToken = jwt.sign({ email: user.email }, "supersecret", {
+        expiresIn: "10m",
+      });
 
-      return resp.success(res, "User Updated!", user);
+      let userData = await User.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      });
+      return resp.success(res, "User Updated!", userData);
     } catch (e) {
+      return resp.fail(res);
+    }
+  },
+
+  logout: async (req, res) => {
+    try {
+      let user = await User.findByIdAndUpdate(
+        req.userData.id,
+        {
+          accessToken: "",
+        },
+        {
+          new: true,
+        }
+      );
+      if (!user) {
+        return resp.fail(res);
+      }
+      return resp.success(res, "user loged out!");
+    } catch (err) {
       return resp.fail(res);
     }
   },
@@ -68,7 +112,6 @@ module.exports = {
   changePassword: async (req, res) => {
     try {
       let user = await User.findById(req.params.id);
-
       if (!user) {
         return resp.unauthorized(res);
       }
@@ -77,11 +120,9 @@ module.exports = {
         if (req.body.password == req.body.newPassword) {
           return resp.taken(res, "Same password is not allowed!");
         }
-
         let userData = await User.findByIdAndUpdate(req.params.id, {
           password: md5(req.body.newPassword),
         });
-
         return resp.success(res, "password changed successfully!", userData);
       }
 
