@@ -18,7 +18,7 @@ router.post(
         .pattern(new RegExp("^[a-zA-Z0-9!@#$%^&*]{6,16}$"))
         .required()
         .min(8),
-      c_password: Joi.ref("password"),
+      cPassword: Joi.ref("password"),
       dateOfBirth: Joi.string().required(),
       userName: Joi.string().optional(),
       city: Joi.string().lowercase(),
@@ -47,6 +47,22 @@ router.post(
     }),
   }),
   userContorller.verifyOtp
+);
+
+router.post(
+  "/forgetPassword",
+  celebrate({
+    body: Joi.object().keys({
+      email: Joi.string().email().lowercase().required(),
+      password: Joi.string()
+        .pattern(new RegExp("^[a-zA-Z0-9!@#$%^&*]{6,16}$"))
+        .required()
+        .min(8),
+      cPassword: Joi.ref("password"),
+      verificationCode: Joi.number().required(),
+    }),
+  }),
+  userContorller.forgetPassword
 );
 
 router.post(

@@ -22,7 +22,7 @@ module.exports = {
           expiresIn: "10m",
         }
       );
-      if (req.body.password != req.body.c_password) {
+      if (req.body.password != req.body.cPassword) {
         return resp.unknown(res, "Passwords are not matched!");
       }
 
@@ -194,6 +194,50 @@ module.exports = {
       return resp.unknown(res, "Invalid password");
     } catch (e) {
       return resp.fail(res, "err from user signin", e);
+    }
+  },
+
+  forgetPassword: async (req, res) => {
+    try {
+      let verificationCode = req.body.verificationCode;
+      let user = await User.findOne({
+        email: req.body.email,
+      });
+
+      if (!user) {
+        return resp.notFound(res, "email not found");
+      }
+      if (verificationCode != user.verificationCode) {
+        return resp.unknown(res, "Srry, Invalid OTP!");
+      }
+
+      req.body.accessToken = jwt.sign(
+        {
+          email: req.body.email,
+        },
+        "supersecret"
+      );
+
+      let userVerified = await User.findOneAndUpdate(
+        {
+          email: req.body.email,
+        },
+        {
+          $set: {
+            password: md5(req.body.password),
+            accessToken: req.body.accessToken,
+            verificationCode: null,
+          },
+        },
+        {
+          new: true,
+        }
+      );
+
+      return resp.success(res, "Email verified, Successfuly!", userVerified);
+    } catch (error) {
+      console.log(error);
+      return resp.fail(res, "err from otp verification!", error);
     }
   },
 
