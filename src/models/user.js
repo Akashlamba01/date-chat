@@ -17,6 +17,11 @@ const userSchema = new mongoose.Schema(
     city: String,
     cityState: String,
     avatar: String,
+    verificationCode: String,
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
 
     // intrest: String,
   },

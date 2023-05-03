@@ -3,6 +3,7 @@ const { resp } = require("../utility/response");
 const jwt = require("jsonwebtoken");
 const md5 = require("md5");
 const auth = require("../utility/middleware");
+const nodemailerVerification = require("../utility/nodemailer");
 
 module.exports = {
   getUser: async (req, res) => {
@@ -38,7 +39,71 @@ module.exports = {
       return resp.taken(res, "email has already exitst");
     } catch (e) {
       // console.log("err from user signup", e);
+      console.log(e);
       return resp.fail(res, "err from user signup", e);
+    }
+  },
+
+  sendOtp: async (req, res) => {
+    try {
+      let otp = Math.floor(1000 + Math.random() * 9000);
+      await nodemailerVerification.sendOtp(otp, req.body.email);
+
+      let verifyEmail = await User.findOneAndUpdate(
+        {
+          email: req.body.email,
+        },
+        {
+          verificationCode: otp,
+        },
+        {
+          new: true,
+        }
+      );
+
+      // console.log(verifyEmail)
+      if (!verifyEmail) {
+        return resp.notFound(res, "email not found!");
+      }
+
+      return resp.success(res, "OTP sent on your Registered Email Address!");
+    } catch (error) {
+      return resp.fail(res, "err from otp verification!", error);
+    }
+  },
+
+  verifyOtp: async (req, res) => {
+    try {
+      let verificationCode = req.body.verificationCode;
+      let user = await User.findOne({
+        email: req.body.email,
+      });
+
+      if (!user) {
+        return resp.notFound(res, "email not found");
+      }
+
+      if (verificationCode != user.verificationCode) {
+        return resp.unknown(res, "Srry, Invalid OTP!");
+      }
+
+      let userVerified = await User.findOneAndUpdate(
+        {
+          email: req.body.email,
+        },
+        {
+          isVerified: true,
+          verificationCode: null,
+        },
+        {
+          new: true,
+        }
+      );
+
+      return resp.success(res, "Email verified, Successfuly!", userVerified);
+    } catch (error) {
+      console.log(error);
+      return resp.fail(res, "err from otp verification!", error);
     }
   },
 

@@ -29,6 +29,27 @@ router.post(
 );
 
 router.post(
+  "/sendOtp",
+  celebrate({
+    body: Joi.object().keys({
+      email: Joi.string().email().lowercase().required(),
+    }),
+  }),
+  userContorller.sendOtp
+);
+
+router.post(
+  "/verifyOtp",
+  celebrate({
+    body: Joi.object().keys({
+      email: Joi.string().email().lowercase().required(),
+      verificationCode: Joi.number().required(),
+    }),
+  }),
+  userContorller.verifyOtp
+);
+
+router.post(
   "/login",
   celebrate({
     body: Joi.object().keys({
