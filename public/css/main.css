@@ -81,14 +81,11 @@
   #main {
     padding-bottom: 40px;
   }
+
   .main-container .form-section {
     width: 80%;
     margin-top: 50px;
   }
-
-  /* .main-container .form-section .form-heading img {
-    width: 40px;
-  } */
 
   .main-container .form-section .form-heading h2 {
     padding: 24px 0;
@@ -144,15 +141,11 @@
     width: 40%;
     height: 2.6rem;
     margin-bottom: 16px;
-    /* float: right; */
     font-size: 20px;
-    /* margin-right: 14px;
-    margin-left: 0px; */
-    /* margin: 5px 0; */
   }
 
   .form-section form input:nth-child(odd) {
-    margin-right: 4%;
+    margin-right: 6%;
   }
 
   .form-section form input:nth-child(even) {
@@ -168,12 +161,39 @@
 
 /* media for 1025px screen size */
 @media screen and (min-width: 1025px) {
+  .form-section form input:nth-child(odd) {
+    margin-right: 7%;
+  }
+
+  .form-section form input:nth-child(even) {
+    margin-left: 6%;
+  }
   .form-section form input[type="submit"] {
     /* margin-top: 10px; */
     margin-right: 36px;
+    width: 120px;
     /* margin-bottom: 20px; */
   }
 }
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1200px) {
+  .main-container .form-section {
+    margin-top: 130px;
+  }
+  .form-section form input {
+    width: 45%;
+  }
+
+  .form-section form input:nth-child(odd) {
+    margin-right: 2%;
+  }
+
+  .form-section form input:nth-child(even) {
+    margin-left: 2%;
+  }
+  .form-section form input[type="submit"] {
+    /* margin-top: 10px; */
+    margin-right: 42px;
+    width: 120px;
+  }
 }
