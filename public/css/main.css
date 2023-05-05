@@ -1,0 +1,179 @@
+#main {
+  background: url("../images/beach-copules1.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* border: 2px solid red; */
+  padding-top: 60px;
+  height: 100vh;
+}
+
+/* form box/////////////////////////// */
+.main-container .form-section {
+  background-color: rgba(0, 0, 0, 0.71);
+  box-shadow: 0px 0 5px 1px rgb(61, 28, 28);
+  width: 90%;
+  margin: 0px auto;
+  margin-top: 50px;
+}
+
+.main-container .form-section .form-heading {
+  text-align: center;
+  color: white;
+}
+.main-container .form-section .form-heading h2 {
+  padding: 20px 0;
+}
+
+/* profile img////////////////////// */
+.main-container .form-section .form-heading img {
+  width: 30px;
+  margin-left: -10px;
+}
+
+/* form////////////////////////////////////////// */
+.main-container .form-section form {
+  width: 80%;
+  margin: auto;
+  padding-bottom: 80px;
+}
+
+.form-section form input {
+  background-color: transparent;
+  color: white;
+  height: 30px;
+  margin-bottom: 8px;
+  box-shadow: 0 0 2px 1px rgb(52, 51, 51);
+  border-radius: 3px;
+  width: 100%;
+  font-size: 16px;
+  padding-left: 10px;
+  margin-left: -8px;
+  font-weight: bold;
+}
+
+.form-section form input[type="submit"] {
+  /* width: 50%; */
+  width: 100px;
+  padding-left: 0px;
+  background-color: rgb(45, 44, 44);
+  border: none;
+  float: right;
+  margin-top: 16px;
+  margin-right: 16px;
+}
+
+.form-section form input[type="submit"]:hover {
+  cursor: pointer;
+  background-color: #484747;
+}
+.form-section form label {
+  /* font-weight: bold; */
+  color: #fff;
+}
+
+.form-section form input::placeholder {
+  color: rgb(137, 131, 131);
+}
+
+/* media for 479px screen size */
+@media screen and (min-width: 479px) {
+  #main {
+    padding-bottom: 40px;
+  }
+  .main-container .form-section {
+    width: 80%;
+    margin-top: 50px;
+  }
+
+  /* .main-container .form-section .form-heading img {
+    width: 40px;
+  } */
+
+  .main-container .form-section .form-heading h2 {
+    padding: 24px 0;
+    font-size: 1.6rem;
+  }
+
+  .main-container .form-section form {
+    width: 80%;
+    margin: auto;
+    padding-bottom: 85px;
+  }
+
+  .form-section form input {
+    width: 40%;
+    height: 2rem;
+    margin-bottom: 12px;
+    margin-left: 0;
+  }
+
+  .form-section form input:nth-child(odd) {
+    margin-right: 5%;
+  }
+
+  .form-section form input:nth-child(even) {
+    margin-left: 4%;
+  }
+
+  .form-section form input[type="submit"] {
+    margin-top: 10px;
+    margin-right: 16px;
+  }
+}
+
+/* media for 769px screen size */
+@media screen and (min-width: 769px) {
+  .main-container .form-section {
+    width: 60%;
+    margin-top: 100px;
+  }
+
+  .main-container .form-section .form-heading h2 {
+    padding: 30px 0;
+    font-size: 2rem;
+  }
+
+  .main-container .form-section form {
+    width: 80%;
+    /* margin: auto;
+    padding-bottom: 85px; */
+  }
+
+  .form-section form input {
+    width: 40%;
+    height: 2.6rem;
+    margin-bottom: 16px;
+    /* float: right; */
+    font-size: 20px;
+    /* margin-right: 14px;
+    margin-left: 0px; */
+    /* margin: 5px 0; */
+  }
+
+  .form-section form input:nth-child(odd) {
+    margin-right: 4%;
+  }
+
+  .form-section form input:nth-child(even) {
+    margin-left: 5%;
+  }
+
+  .form-section form input[type="submit"] {
+    margin-top: 10px;
+    margin-right: 24px;
+    margin-bottom: 20px;
+  }
+}
+
+/* media for 1025px screen size */
+@media screen and (min-width: 1025px) {
+  .form-section form input[type="submit"] {
+    /* margin-top: 10px; */
+    margin-right: 36px;
+    /* margin-bottom: 20px; */
+  }
+}
+
+@media screen and (min-width: 1025px) {
+}

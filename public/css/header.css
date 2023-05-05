@@ -1,0 +1,72 @@
+a {
+  color: white;
+  text-decoration: none;
+}
+
+#header-container {
+  background-color: #9e1b47;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  position: fixed;
+  width: 100%;
+  /* margin-top: ; */
+}
+#header-container .logo {
+  padding: 0 12px;
+}
+
+#header-container .sider-content {
+  padding: 0 12px;
+  text-align: right;
+}
+#header-container .sider-content p {
+  margin-top: 0px;
+  background-color: #9e1b47;
+}
+#header-container .sider-content p a {
+  text-decoration: none;
+}
+#header-container .sider-content #main-profile img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+}
+#header-container .sider-content #user-name {
+  padding: 8px;
+  padding-top: 4px;
+  margin-right: -8px;
+  border-radius: 0 0 10px 10px;
+}
+
+@media screen and (min-width: 479px) {
+}
+
+@media screen and (min-width: 769px) {
+  #header-container {
+    height: 52px;
+    padding-top: 16px;
+  }
+
+  #header-container .logo {
+    font-size: 1.2rem;
+  }
+
+  #header-container .sider-content p {
+    font-size: 1.4rem;
+  }
+
+  #header-container .sider-content #main-profile img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+  }
+  #header-container .sider-content #user-name {
+    margin-right: -4px;
+  }
+}
+
+/* media for 769px screen size */
+@media screen and (min-width: 1025px) {
+}

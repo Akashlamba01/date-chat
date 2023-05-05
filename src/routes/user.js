@@ -3,6 +3,8 @@ const router = express.Router();
 const { Joi, celebrate } = require("celebrate");
 const userContorller = require("../controller/user");
 const auth = require("../utility/middleware");
+const passport = require("passport");
+const passportGoogle = require("../config/passport-google-auth2O-strategy");
 
 router.get("/", userContorller.getUser);
 
@@ -128,5 +130,18 @@ router.post(
   auth.verifyToken,
   userContorller.uploadImg
 );
+
+// router.get(
+//   "/auth/google",
+//   passport.authenticate("google", { scope: ["profile", "email"] })
+// );
+
+// router.get(
+//   "/auth/google/callback",
+//   passport.authenticate("google", {
+//     failureRedirect: "/users/sign-in",
+//   }),
+//   userContorller.user
+// );
 
 module.exports = router;

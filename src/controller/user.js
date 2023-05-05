@@ -13,6 +13,21 @@ module.exports = {
     return resp.success(res, "success", user);
   },
 
+  getById: async (req, res) => {
+    try {
+      let user = await User.findById(req.params.id);
+
+      if (!user) {
+        return resp.notFound(res, "User not Found!");
+      }
+
+      return resp.success(res, "Succeess!", user);
+    } catch (e) {
+      console.log(e);
+      return resp.fail(res, e);
+    }
+  },
+
   signUp: async (req, res) => {
     try {
       req.body.accessToken = jwt.sign(
@@ -176,6 +191,13 @@ module.exports = {
 
   changePassword: async (req, res) => {
     try {
+      req.body.accessToken = jwt.sign(
+        { email: req.body.email },
+        "supersecret",
+        {
+          expiresIn: "10m",
+        }
+      );
       let user = await User.findById(req.params.id);
       if (!user) {
         return resp.unauthorized(res);
@@ -183,10 +205,13 @@ module.exports = {
 
       if (user.password == md5(req.body.password)) {
         if (req.body.password == req.body.newPassword) {
-          return resp.taken(res, "Same password is not allowed!");
+          return resp.taken(res, "Same passwords are not allowed!");
         }
         let userData = await User.findByIdAndUpdate(req.params.id, {
-          password: md5(req.body.newPassword),
+          $set: {
+            password: md5(req.body.newPassword),
+            accessToken: req.body.accessToken,
+          },
         });
         return resp.success(res, "password changed successfully!", userData);
       }
@@ -274,5 +299,11 @@ module.exports = {
     } catch (e) {
       return resp.fail(res);
     }
+  },
+
+  user: function (req, res) {
+    console.log("jkljlkjljljl");
+
+    return resp.success(res, "succsess!");
   },
 };
