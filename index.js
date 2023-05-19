@@ -28,10 +28,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get("/", (req, res) => {
-  res.send("hello");
-  return;
-});
+// app.get("/", (req, res) => {
+//   res.send("hello");
+//   return;
+// });
 
 app.use("/", require("./src/routes"));
 

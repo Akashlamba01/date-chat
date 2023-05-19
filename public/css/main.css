@@ -15,6 +15,7 @@
   width: 90%;
   margin: 0px auto;
   margin-top: 50px;
+  /* border: 2px solid red; */
 }
 
 .main-container .form-section .form-heading {
@@ -33,6 +34,7 @@
 
 /* form////////////////////////////////////////// */
 .main-container .form-section form {
+  /* border: 2px solid green; */
   width: 80%;
   margin: auto;
   padding-bottom: 80px;
@@ -76,6 +78,43 @@
   color: rgb(137, 131, 131);
 }
 
+#other-login-details {
+  /* border: 2px solid yellow; */
+  /* border: 2px solid green; */
+  width: 90%;
+  margin: auto;
+  margin-top: 2.5rem;
+  /* margin-bottom: 2.5rem; */
+  /* padding-bottom: 80px; */
+}
+
+#other-login-details .other-login-form {
+  /* border: 2px solid blue; */
+  height: 2.2rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
+#other-login-details .other-login-form a button {
+  height: 100%;
+  color: rgb(186, 185, 185);
+  width: 100%;
+  border-radius: 16px;
+  background-color: rgba(0, 0, 0, 0.71);
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.8s;
+}
+
+#other-login-details .other-login-form a button:hover {
+  text-decoration: underline;
+  background-color: rgba(36, 35, 35, 0.71);
+  color: rgb(231, 230, 230);
+  font-size: 17px;
+  cursor: pointer;
+}
+
 /* media for 479px screen size */
 @media screen and (min-width: 479px) {
   #main {
@@ -117,6 +156,26 @@
     margin-top: 10px;
     margin-right: 16px;
   }
+
+  #other-login-details {
+    width: 60%;
+    margin: auto;
+    margin-top: 2.5rem;
+  }
+
+  #other-login-details .other-login-form {
+    margin-top: 0.8rem;
+    height: 2.5rem;
+  }
+
+  #other-login-details .other-login-form a button {
+    border-radius: 20px;
+    font-size: 1.1rem;
+  }
+
+  #other-login-details .other-login-form a button:hover {
+    font-size: 1.2rem;
+  }
 }
 
 /* media for 769px screen size */
@@ -157,6 +216,20 @@
     margin-right: 24px;
     margin-bottom: 20px;
   }
+
+  #other-login-details {
+    width: 50%;
+    margin-top: 3rem;
+  }
+
+  #other-login-details .other-login-form a button {
+    border-radius: 24px;
+    font-size: 1.2rem;
+  }
+
+  #other-login-details .other-login-form a button:hover {
+    font-size: 1.3rem;
+  }
 }
 
 /* media for 1025px screen size */
@@ -173,6 +246,20 @@
     margin-right: 36px;
     width: 120px;
     /* margin-bottom: 20px; */
+  }
+
+  #other-login-details .other-login-form {
+    margin-top: 1.1rem;
+  }
+
+  #other-login-details .other-login-form a button {
+    border-radius: 24px;
+    font-size: 1.3rem;
+    height: 3rem;
+  }
+
+  #other-login-details .other-login-form a button:hover {
+    font-size: 1.4rem;
   }
 }
 
@@ -195,5 +282,14 @@
     /* margin-top: 10px; */
     margin-right: 42px;
     width: 120px;
+  }
+
+  #other-login-details {
+    width: 40%;
+    margin-top: 3rem;
+  }
+
+  #other-login-details .other-login-form {
+    margin-top: 1.3rem;
   }
 }

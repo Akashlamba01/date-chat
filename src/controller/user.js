@@ -7,9 +7,10 @@ const nodemailerVerification = require("../utility/nodemailer");
 
 module.exports = {
   getUser: async (req, res) => {
-    let user = await User.find();
+    let user = await User.find(req.query);
     // let user = "this is user";
-    // console.log(user);
+    // console.log(user);   
+    console.log(user);
     return resp.success(res, "success", user);
   },
 
@@ -20,7 +21,7 @@ module.exports = {
       if (!user) {
         return resp.notFound(res, "User not Found!");
       }
-
+        
       return resp.success(res, "Succeess!", user);
     } catch (e) {
       console.log(e);
@@ -34,7 +35,7 @@ module.exports = {
         { email: req.body.email },
         "supersecret",
         {
-          expiresIn: "10m",
+          expiresIn: "3d",
         }
       );
       if (req.body.password != req.body.cPassword) {
@@ -128,7 +129,7 @@ module.exports = {
         { email: req.body.email },
         "supersecret",
         {
-          expiresIn: "10m",
+          expiresIn: "3d",
         }
       );
       let user = await User.findOne({ email: req.body.email });
@@ -157,7 +158,7 @@ module.exports = {
         return resp.unauthorized(res, "Invalid Id");
       }
       req.body.accessToken = jwt.sign({ email: user.email }, "supersecret", {
-        expiresIn: "10m",
+        expiresIn: "3d",
       });
 
       let userData = await User.findByIdAndUpdate(req.params.id, req.body, {
@@ -195,7 +196,7 @@ module.exports = {
         { email: req.body.email },
         "supersecret",
         {
-          expiresIn: "10m",
+          expiresIn: "3d",
         }
       );
       let user = await User.findById(req.params.id);
