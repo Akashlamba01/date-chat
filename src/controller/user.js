@@ -4,12 +4,15 @@ const jwt = require("jsonwebtoken");
 const md5 = require("md5");
 const auth = require("../utility/middleware");
 const nodemailerVerification = require("../utility/nodemailer");
+// require("dotenv").config();
+require("dotenv").config({ path: "../../.env" });
 
 module.exports = {
   getUser: async (req, res) => {
     let user = await User.find(req.query);
     // let user = "this is user";
-    // console.log(user);   
+    // console.log(user);
+    console.log(process.env.JWT_SECRET);
     console.log(user);
     return resp.success(res, "success", user);
   },
@@ -21,7 +24,7 @@ module.exports = {
       if (!user) {
         return resp.notFound(res, "User not Found!");
       }
-        
+
       return resp.success(res, "Succeess!", user);
     } catch (e) {
       console.log(e);
@@ -33,14 +36,11 @@ module.exports = {
     try {
       req.body.accessToken = jwt.sign(
         { email: req.body.email },
-        "supersecret",
+        process.env.JWT_SECRET,
         {
           expiresIn: "3d",
         }
       );
-      if (req.body.password != req.body.cPassword) {
-        return resp.unknown(res, "Passwords are not matched!");
-      }
 
       let user = await User.findOne({
         email: req.body.email,
@@ -127,7 +127,7 @@ module.exports = {
     try {
       req.body.accessToken = jwt.sign(
         { email: req.body.email },
-        "supersecret",
+        process.env.JWT_SECRET,
         {
           expiresIn: "3d",
         }
@@ -157,9 +157,13 @@ module.exports = {
       if (!user) {
         return resp.unauthorized(res, "Invalid Id");
       }
-      req.body.accessToken = jwt.sign({ email: user.email }, "supersecret", {
-        expiresIn: "3d",
-      });
+      req.body.accessToken = jwt.sign(
+        { email: user.email },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "3d",
+        }
+      );
 
       let userData = await User.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
@@ -194,7 +198,7 @@ module.exports = {
     try {
       req.body.accessToken = jwt.sign(
         { email: req.body.email },
-        "supersecret",
+        process.env.JWT_SECRET,
         {
           expiresIn: "3d",
         }
@@ -241,7 +245,7 @@ module.exports = {
         {
           email: req.body.email,
         },
-        "supersecret"
+        process.env.JWT_SECRET
       );
 
       let userVerified = await User.findOneAndUpdate(
